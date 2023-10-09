@@ -1,0 +1,4 @@
+**/build
+**/bin
+**/secret.hpp
+**/.env
