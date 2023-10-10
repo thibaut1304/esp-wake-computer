@@ -1,7 +1,8 @@
 {
     "configuration": "PartitionScheme=default,FlashMode=qio,FlashFreq=80,UploadSpeed=921600,DebugLevel=none,EraseFlash=none",
     "board": "esp32:esp32:esp32wrover",
-    "sketch": "ota.ino",
+    "sketch": "esp-wake-computer.ino",
     "port": "/dev/ttyUSB0",
-    "output": "build"
+    "output": "build",
+    "programmer": "esptool"
 }
