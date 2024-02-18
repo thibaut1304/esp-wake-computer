@@ -4,7 +4,7 @@
         {
             "label": "Build Sketch",
             "type": "shell",
-            "command": "arduino-cli compile --fqbn esp32:esp32:esp32wrover --output-dir /home/thibaut/Documents/github/esp-wake-computer/bin /home/thibaut/Documents/github/esp-wake-computer",
+            "command": "arduino-cli compile --fqbn esp32:esp32:esp32wrover --output-dir /home/thibaut/Documents/vault/github/esp-wake-computer/bin /home/thibaut/Documents/vault/github/esp-wake-computer",
             "group": {
                 "kind": "build",
                 "isDefault": true

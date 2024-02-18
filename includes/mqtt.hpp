@@ -15,6 +15,7 @@ void reconnect() {
     if (client.connect("ESP32Client", MQTT_USERNAME, MQTT_PASSWORD)) {
       Serial.println("connected");
       client.subscribe(mqtt_setOn);
+      client.subscribe(windobe);
 
     } else {
       Serial.print("failed, rc=");
