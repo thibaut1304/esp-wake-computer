@@ -13,30 +13,30 @@ void setupOTA() {
 		server.send(200, "text/html", "<form method='POST' action='/update' enctype='multipart/form-data'><input type='file' name='update'><input type='submit' value='Mettre à jour'></form>");
 	});
 
-    server.on("/update", HTTP_POST, []() {
-        server.sendHeader("Connection", "close");
-        server.send(200, "text/plain", (Update.hasError()) ? "Mise à jour échouée!" : "Mise à jour réussie! Redémarrage...");
-        ESP.restart();
-    }, []() {
-        HTTPUpload& upload = server.upload();
-        if (upload.status == UPLOAD_FILE_START) {
-            Serial.printf("Mise à jour: %s\n", upload.filename.c_str());
-            if (!Update.begin(UPDATE_SIZE_UNKNOWN)) {
-                Update.printError(Serial);
-            }
-        } else if (upload.status == UPLOAD_FILE_WRITE) {
-            if (Update.write(upload.buf, upload.currentSize) != upload.currentSize) {
-                Update.printError(Serial);
-            }
-        } else if (upload.status == UPLOAD_FILE_END) {
-            if (Update.end(true)) {
-                Serial.printf("Mise à jour terminée: %u\n", upload.totalSize);
-            } else {
-                Update.printError(Serial);
-            }
-        }
-    });
-}
+	server.on("/update", HTTP_POST, []() {
+		server.sendHeader("Connection", "close");
+		server.send(200, "text/plain", (Update.hasError()) ? "Mise à jour échouée!" : "Mise à jour réussie! Redémarrage...");
+		ESP.restart();
+	}, []() {
+		HTTPUpload& upload = server.upload();
+		if (upload.status == UPLOAD_FILE_START) {
+			Serial.printf("Mise à jour: %s\n", upload.filename.c_str());
+			if (!Update.begin(UPDATE_SIZE_UNKNOWN)) {
+				Update.printError(Serial);
+			}
+		} else if (upload.status == UPLOAD_FILE_WRITE) {
+			if (Update.write(upload.buf, upload.currentSize) != upload.currentSize) {
+				Update.printError(Serial);
+			}
+		} else if (upload.status == UPLOAD_FILE_END) {
+			if (Update.end(true)) {
+				Serial.printf("Mise à jour terminée: %u\n", upload.totalSize);
+			} else {
+				Update.printError(Serial);
+			}
+		}
+	});
+	}
 
 
 void setup() {
@@ -47,7 +47,8 @@ void setup() {
 	client.setServer(MQTT_SERVER, MQTT_PORT);
 	client.setCallback(callback);
 	pinMode(ledPin, OUTPUT);
-    digitalWrite(ledPin, HIGH);
+	digitalWrite(ledPin, HIGH);
+	// client.publish("Digital_Write", "HIGH");
 }
 
 
@@ -62,9 +63,9 @@ void loop() {
 	// delay(500);                  // Attend 500ms
 	// digitalWrite(ledPin, LOW);   // Éteint la LED
 	// delay(500);                  // Attend 500ms
-    // digitalWrite(pin, HIGH);  // Met la pin à HIGH
-    // delay(5000);              // Attend 5 secondes
-    // digitalWrite(pin, LOW);   // Met la pin à LOW
-    // delay(1000);              // Attend 1 seconde avant de passer à la suivante
+	// digitalWrite(pin, HIGH);  // Met la pin à HIGH
+	// delay(5000);              // Attend 5 secondes
+	// digitalWrite(pin, LOW);   // Met la pin à LOW
+	// delay(1000);              // Attend 1 seconde avant de passer à la suivante
 	client.loop();
 }
