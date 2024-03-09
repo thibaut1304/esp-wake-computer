@@ -24,39 +24,42 @@ void callback_wake(String messageTemp, char* topic) {
 		POWER = false;
 		digitalWrite(PIN, HIGH);
 		// client.publish("Digital_Write", "HIGH");
-		delay(100);
+		// delay(100);
 		// digitalWrite(PIN, HIGH);
 		// client.publish("Digital_Write", "HIGH");
 		// delay(3000);
 		// digitalWrite(PIN, LOW);
 		// client.publish("Digital_Write", "LOW");
 
+		client.publish(DEBUG, "Message off in all topic");
 		client.publish(mqtt_getOn, "off");
 		client.publish(getWindobe, "off");
 	}
 	else if (messageTemp == "on" && !strcmp(topic, mqtt_setOn)) {
 		POWER = true;
-		digitalWrite(PIN, HIGH);
+		// digitalWrite(PIN, HIGH);
 		// client.publish("Digital_Write", "HIGH");
-		delay(100);
+		// delay(100);
 		digitalWrite(PIN, LOW);
 		// client.publish("Digital_Write", "HIGH");
 		delay(500);
 		digitalWrite(PIN, HIGH);
 		// client.publish("Digital_Write", "LOW");
+		client.publish(DEBUG, "Message on in linux");
 		client.publish(mqtt_getOn, "on");
 		client.publish(getWindobe, "off");
 	}
 	else if (messageTemp == "on" && !strcmp(topic, windobe)) {
 		POWER = true;
-		digitalWrite(PIN, HIGH);
+		// digitalWrite(PIN, HIGH);
 		// client.publish("Digital_Write", "HIGH");
-		delay(100);
+		// delay(100);
 		digitalWrite(PIN, LOW);
 		// client.publish("Digital_Write", "LOW");
 		delay(500);
 		digitalWrite(PIN, HIGH);
 		// client.publish("Digital_Write", "HIGH");
+		client.publish(DEBUG, "Message on in windows");
 		client.publish(getWindobe, "on");
 		client.publish(mqtt_getOn, "off");
 	}

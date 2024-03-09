@@ -5,6 +5,7 @@
 
 # include "../includes/topics-mqtt.hpp"
 # include "../secret.hpp"
+#include <WiFi.h>
 
 bool POWER = false;
 
@@ -19,6 +20,7 @@ void reconnect() {
 			client.subscribe(mqtt_setOn);
 			client.subscribe(windobe);
 			client.subscribe(is_power);
+			client.subscribe(DEBUG);
 
 		} else {
 			Serial.print("failed, rc=");

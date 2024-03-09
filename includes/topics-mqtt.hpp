@@ -6,4 +6,5 @@
 # define windobe			"topic/windobe"
 # define getWindobe			"topic/getWindobe"
 # define is_power			"topic/power"
+# define DEBUG				"topic/debug"
 
