@@ -5,8 +5,8 @@
 
 # include "../includes/topics-mqtt.hpp"
 # include "../secret.hpp"
-#include <WiFi.h>
-
+# include <WiFi.h>
+# include "wifi.hpp"
 bool POWER = false;
 
 WiFiClient espClient;
@@ -14,6 +14,10 @@ PubSubClient client(espClient);
 RCSwitch mySwitch = RCSwitch();
 
 void reconnect() {
+	if (WiFi.status() != WL_CONNECTED) {
+		Serial.println("Reconnecting to WiFi...");
+		setup_wifi();  // Tente de reconnecter le WiFi
+	}
 	while (!client.connected()) {
 		if (client.connect("ESP32Client", MQTT_USERNAME, MQTT_PASSWORD)) {
 			Serial.println("connected");
