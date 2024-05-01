@@ -1,11 +1,13 @@
 FROM alpine:3.18
 
-RUN apk update && apk add wget tar sed curl bash
+RUN apk update && apk add --no-cache wget tar sed curl bash ca-certificates
 
 WORKDIR /workspace
-COPY script.sh /workspace/
-RUN chmod +x /workspace/script.sh
+COPY script/launch.sh /workspace/
+COPY required-libraries.txt /workspace/
+COPY src/ /workspace/
+RUN chmod +x /workspace/launch.sh
 
 VOLUME ["/workspace/bin"]
 
-ENTRYPOINT ["/workspace/script.sh"]
+ENTRYPOINT ["/workspace/launch.sh"]
