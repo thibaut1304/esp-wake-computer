@@ -7,6 +7,8 @@
 # include "../secret.hpp"
 # include <WiFi.h>
 # include "wifi.hpp"
+
+#include <WiFiUdp.h>
 bool POWER = false;
 
 WiFiClient espClient;

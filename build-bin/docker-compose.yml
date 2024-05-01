@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  arduino-builder:
+    build:
+      context: .
+    container_name: name
+    volumes:
+      - ./src:/workspace/esp-wake-computer
+      - ./bin:/workspace/bin
+    working_dir: /workspace
+    command: ["./launch.sh"]
+
