@@ -38,9 +38,11 @@ void setupOTA() {
 	});
 	}
 
+unsigned long startTime;
 
 void setup() {
 	Serial.begin(115200);
+	startTime = millis();
 	setup_wifi();
 	setupOTA();
 	server.begin();
@@ -54,6 +56,9 @@ void setup() {
 
 
 void loop() {
+	if (millis() - startTime > 86400000) { // Redémarre toutes les 24 heures
+		ESP.restart();
+	}
 	if (!client.connected()) {
 		reconnect();
 	}

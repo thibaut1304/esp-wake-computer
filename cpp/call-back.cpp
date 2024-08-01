@@ -67,12 +67,13 @@ void callback_wake(String messageTemp, char* topic) {
 
 void callback(char* topic, byte* message, unsigned int length) {
 	String messageTemp;
-	Serial.print("topic is ");
-	Serial.println(topic);
 
 	for (int i = 0; i < length; i++) {
 	messageTemp += (char)message[i];
 	}
-
+	Serial.print("topic is ");
+	Serial.println(topic);
+	Serial.print("Message is ");
+	Serial.println(messageTemp);
 	callback_wake(messageTemp, topic);
 }
