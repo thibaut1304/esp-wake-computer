@@ -53,24 +53,24 @@ void setup() {
 	// client.publish("Digital_Write", "HIGH");
 }
 
-
+// 86400000 -> 24h
 
 void loop() {
-	if (millis() - startTime > 86400000) { // Redémarre toutes les 24 heures
+	if (millis() - startTime > 86400000) {
+		if (client.connected()) {
+			client.publish(DEBUG, "ESP/reboot");
+			Serial.println("Time to reboot and is connected");
+			delay(100);
+		} else {
+			Serial.println("Time to reboot and is not connected");
+			delay(100);
+		}
+
 		ESP.restart();
 	}
 	if (!client.connected()) {
 		reconnect();
 	}
-	server.handleClient();
-
-	// digitalWrite(ledPin, HIGH);  // Allume la LED
-	// delay(500);                  // Attend 500ms
-	// digitalWrite(ledPin, LOW);   // Éteint la LED
-	// delay(500);                  // Attend 500ms
-	// digitalWrite(pin, HIGH);  // Met la pin à HIGH
-	// delay(5000);              // Attend 5 secondes
-	// digitalWrite(pin, LOW);   // Met la pin à LOW
-	// delay(1000);              // Attend 1 seconde avant de passer à la suivante
 	client.loop();
+	server.handleClient();
 }

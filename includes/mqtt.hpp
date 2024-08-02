@@ -13,6 +13,10 @@ WiFiClient espClient;
 PubSubClient client(espClient);
 RCSwitch mySwitch = RCSwitch();
 
+void	reboot() {
+	client.publish(DEBUG, "REBOOT esp32");
+}
+
 void reconnect() {
 	int max_attempts = 5;
 	int attempts = 0;
