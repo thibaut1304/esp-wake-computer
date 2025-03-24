@@ -10,7 +10,7 @@ Si windows est allume et on veux allumer linux.
 Si Linux est allume et on veux windows
 	Alors envoyer grub2 et reboot
 
-
+Fonction Linux supprimé
 
 # Plan
 
