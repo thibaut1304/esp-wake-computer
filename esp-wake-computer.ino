@@ -1,6 +1,6 @@
 #include <WiFi.h>
 #include <ArduinoOTA.h>
-
+#include <PubSubClient.h>
 #include <Update.h>
 #include <ESPmDNS.h>
 #include <WiFiUdp.h>
