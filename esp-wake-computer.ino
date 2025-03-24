@@ -6,7 +6,6 @@
 #include <WiFiUdp.h>
 #include <WebServer.h>
 #include <esp_task_wdt.h>
-# include "secret.hpp"
 # include "includes/topics-mqtt.hpp"
 # include "includes/secret.hpp"
 
