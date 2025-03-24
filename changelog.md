@@ -1,5 +1,15 @@
 # Changelog
 
+## [4.0.1] - 2025-03-24
+
+### 🧠 Ajouté
+- Cooldown de 2 min avant nouvelle action de l'esp32
+- Verifie l'etat de l'interupteur avant de re activer le relais si deja on ne re active pas le relais
+
+### 🛠️ Modifié
+
+### 🧹 Supprimé
+
 ## [4.0.0] - 2025-03-24
 
 ### 🧠 Ajouté

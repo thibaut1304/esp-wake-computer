@@ -27,6 +27,9 @@ WebServer server(80);
 unsigned long startTime;
 unsigned long lastWifiCheck = 0;
 unsigned long lastMqttCheck = 0;
+unsigned long last_on_time = 0;
+const unsigned long ON_COOLDOWN = 2 * 60 * 1000;
+String currentState = "off";  // valeur par défaut
 
 void debug_log(const String& msg) {
 	String time_msg = "[" + String(millis()) + "ms] " + msg;
@@ -135,18 +138,36 @@ void reconnect() {
 void callback(char* topic, byte* message, unsigned int length) {
 	String messageTemp((char*)message, length);
 
+	if (!strcmp(topic, getWindobe)) {
+		currentState = messageTemp;
+		debug_log("État actuel reçu : " + currentState);
+		return;
+	}
+
 	if (messageTemp == "on" && !strcmp(topic, windobe)) {
-		digitalWrite(ledPin, LOW);
-		delay(RELAY_PRESS_DURATION);
-		digitalWrite(ledPin, HIGH);
-		debug_log(String("Message ON in windows"));
-		client.publish(getWindobe, "on");
+		if (currentState == "on") {
+			debug_log("Commande ON ignorée : l'état est déjà ON");
+			return;
+		}
+		unsigned long now = millis();
+		if (now - last_on_time >= ON_COOLDOWN) {
+			last_on_time = now;
+			digitalWrite(ledPin, LOW);
+			delay(RELAY_PRESS_DURATION);
+			digitalWrite(ledPin, HIGH);
+
+			debug_log("Message ON in windows");
+			client.publish(getWindobe, "on");
+		}
+		else {
+			debug_log("Commande ON ignorée : cooldown actif.");
+		}
 	}
 }
 
 void checkWiFiAndMQTT() {
 	unsigned long currentMillis = millis();
-	if (ESP.getFreeHeap() < 20000) {  // Seuil à adapter
+	if (ESP.getFreeHeap() < 20000) {  // Seuil a verifier pour la heap
 		Serial.println("Heap too low, restarting...");
 		debug_log(String("Heap too low, restarting... ESP/reboot: low heap"));
 		ESP.restart();
